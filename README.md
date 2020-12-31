@@ -16,4 +16,9 @@ python manage.py runserver
 ```
 
 
+3. pybo 앱 생성
+`/mysite`
+```shell
+django-admin startapp pybo
+```
 
