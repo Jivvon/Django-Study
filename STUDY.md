@@ -39,3 +39,25 @@ view 함수의 매개변서 request는 장고에 의해 자동으로 전달되�
 *`python manage.py sqlmigrate pybo 0001` 명령을 실행하면 실제로 어떤 쿼리문이 실행되는지 볼 수 있다*
 
 
+#### 모델 사용하기: 데이터 만들고 저장, 조회하기
+
+`python manage.py shell`: 셸 접속
+```shell
+>>> q = Question(subject='1번제목', content='1번내용', create_date=timezone.now())
+>>> q.save()
+>>> q.id # 1 : id값 자동 생성
+
+>>> Question.objects.all() -> <QuerySet [Question object(1)] >
+>>> Question.objects.all() -> <QuerySet [Question object(1번제목)] > # __str__
+>>> Question.objects.get(id=1) -> <Question: 1번제목> # 한 개 반환
+>>> Question.objects.filter(id<5) -> <QuerySet [~]> # list (여러 개) 반환
+>>> Question.objects.filter(subject__contains='1번') # 문자열 포함 여부
+>>> q.delete() # (1, {'pybo.Question': 1})
+
+>>> q.answer_set.all() -> <QuerySet [<Answer: Answer object (1)>]> # _set
+```
+
+- 데이터 생성, 수정 모두 `save()` 해야 적용된다. `delete()`는 즉시 삭제된다.
+- **Question 모델과 Answer 모델처럼 서로 연결되어 있으면 `연결모델명_set`과 같은 방법으로 연결된 데이터를 조회할 수 있다.**
+
+
